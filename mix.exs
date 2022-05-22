@@ -40,24 +40,29 @@ defmodule Rockelivery.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:ecto_sql, "~> 3.6"},
+      {:ex_machina, "~> 2.7.0"},
+      {:gettext, "~> 0.18"},
+      {:guardian, "~> 2.0"},
+      {:hackney, "~> 1.17"},
+      {:jason, "~> 1.2"},
+      {:pbkdf2_elixir, "~> 2.0"},
       {:phoenix, "~> 1.6.9"},
       {:phoenix_ecto, "~> 4.4"},
-      {:ecto_sql, "~> 3.6"},
-      {:postgrex, ">= 0.0.0"},
       {:phoenix_live_dashboard, "~> 0.6"},
+      {:plug_cowboy, "~> 2.5"},
+      {:postgrex, ">= 0.0.0"},
       {:swoosh, "~> 1.3"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
-      {:gettext, "~> 0.18"},
-      {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"},
-      {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
-      {:pbkdf2_elixir, "~> 2.0"},
-      {:excoveralls, "~> 0.10", only: :test},
-      {:ex_machina, "~> 2.7.0"},
       {:tesla, "~> 1.4"},
-      {:hackney, "~> 1.17"},
+
+      # Envs: dev, test
+      {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
+
+      # Envs: test
       {:bypass, "~> 2.1", only: :test},
+      {:excoveralls, "~> 0.10", only: :test},
       {:mox, "~> 1.0", only: :test}
     ]
   end
