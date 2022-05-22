@@ -57,10 +57,10 @@ defmodule Rockelivery.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:tesla, "~> 1.4"},
 
-      # Envs: dev, test
+      # DEV TEST
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
 
-      # Envs: test
+      # TEST
       {:bypass, "~> 2.1", only: :test},
       {:excoveralls, "~> 0.10", only: :test},
       {:mox, "~> 1.0", only: :test}
