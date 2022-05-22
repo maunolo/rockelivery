@@ -4,6 +4,7 @@ defmodule Rockelivery.User do
   import Ecto.Changeset
 
   alias Ecto.Changeset
+  alias Rockelivery.Order
 
   @primary_key {:id, :binary_id, autogenerate: true}
 
@@ -23,6 +24,8 @@ defmodule Rockelivery.User do
     field :name, :string
     field :zip_code, :string
 
+    has_many :orders, Order
+
     timestamps()
   end
 
@@ -39,6 +42,16 @@ defmodule Rockelivery.User do
     |> unique_constraint([:email])
     |> unique_constraint([:document_id])
     |> put_encrypted_password()
+  end
+
+  def build(%Changeset{} = changeset) do
+    apply_action(changeset, :create)
+  end
+
+  def build(%{} = params) do
+    params
+    |> changeset()
+    |> apply_action(:create)
   end
 
   defp validate_required_params(changeset, state) do

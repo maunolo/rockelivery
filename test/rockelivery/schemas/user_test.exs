@@ -1,11 +1,13 @@
 defmodule Rockelivery.UserTest do
   use Rockelivery.DataCase, async: true
 
+  import Mox
   import Rockelivery.Factory
 
   alias Ecto.Changeset
   alias Rockelivery.User
   alias Rockelivery.Users.Create
+  alias Rockelivery.ViaCep.ClientMock
 
   describe "changeset/2" do
     test "when all params are valid, returns a valid changeset" do
@@ -29,6 +31,8 @@ defmodule Rockelivery.UserTest do
     end
 
     test "when updating a user struct, returns a valid changeset with the given changes" do
+      expect(ClientMock, :get_cep_info, fn _cep -> {:ok, build(:cep_info)} end)
+
       {:ok, user} = Create.call(build(:user_params))
 
       update_params = %{

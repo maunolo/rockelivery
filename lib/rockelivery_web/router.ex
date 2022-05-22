@@ -1,11 +1,12 @@
 defmodule RockeliveryWeb.Router do
   use RockeliveryWeb, :router
 
-  alias RockeliveryWeb.Plugs.UUIDChecker
+  alias RockeliveryWeb.Plugs.{AtomizeParams, UUIDChecker}
 
   pipeline :api do
     plug :accepts, ["json"]
     plug UUIDChecker
+    plug AtomizeParams
   end
 
   scope "/api", RockeliveryWeb do
@@ -13,6 +14,10 @@ defmodule RockeliveryWeb.Router do
 
     get "/", WelcomeController, :index
     resources "/users", UsersController, except: [:new, :edit]
+
+    post "/items", ItemsController, :create
+
+    post "/orders", OrdersController, :create
   end
 
   # Enables LiveDashboard only for development

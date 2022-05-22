@@ -1,14 +1,18 @@
 defmodule RockeliveryWeb.UsersControllerTest do
   use RockeliveryWeb.ConnCase, async: true
 
+  import Mox
   import Rockelivery.Factory
 
-  alias Rockelivery.Utils.Map, as: MapUtil
   alias Rockelivery.User
+  alias Rockelivery.Utils.Map, as: MapUtil
+  alias Rockelivery.ViaCep.ClientMock
 
   describe "create/2" do
     test "when all params are valid, creates the user", %{conn: conn} do
       params = MapUtil.stringify_keys(build(:user_params))
+
+      expect(ClientMock, :get_cep_info, fn _cep -> {:ok, build(:cep_info)} end)
 
       response =
         conn
@@ -33,7 +37,7 @@ defmodule RockeliveryWeb.UsersControllerTest do
       response =
         conn
         |> post(Routes.users_path(conn, :create, params))
-        |> json_response(:bad_request)
+        |> json_response(:unprocessable_entity)
 
       expected_response = %{
         "message" => %{

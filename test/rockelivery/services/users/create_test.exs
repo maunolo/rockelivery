@@ -1,14 +1,18 @@
 defmodule Rockelivery.Users.CreateTest do
   use Rockelivery.DataCase, async: true
 
+  import Mox
   import Rockelivery.Factory
 
   alias Rockelivery.{Error, User}
   alias Rockelivery.Users.Create
+  alias Rockelivery.ViaCep.ClientMock
 
   describe "call/1" do
     test "when all params are valid, returns the user" do
       params = build(:user_params)
+
+      expect(ClientMock, :get_cep_info, fn _cep -> {:ok, build(:cep_info)} end)
 
       response = Create.call(params)
 
@@ -25,7 +29,7 @@ defmodule Rockelivery.Users.CreateTest do
         password: ["should be at least 6 character(s)"]
       }
 
-      assert {:error, %Error{status: :bad_request, result: changeset}} = response
+      assert {:error, %Error{status: :unprocessable_entity, result: changeset}} = response
 
       assert errors_on(changeset) == expected_response
     end
