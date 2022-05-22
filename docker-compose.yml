@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: .
+    environment:
+      # Variables to connect to our Postgres server.
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGDATABASE: rockelivery_dev
+      PGPORT: 5432
+      # Hostname of our Postgres container.
+      PGHOST: local-postgres
+      MIX_ENV: dev
+      PORT: 4000
+    ports:
+      - '4000:4000'
+    depends_on:
+      - postgres
+    links:
+      - 'postgres:local-postgres'
+    # entrypoint: sh -c "rm -f tmp/pids/server.pid && echo 'Rockelivery API awaiting manual start' && tail -f /dev/null"
+    volumes:
+      - ./:/opt/app
+  postgres:
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+    image: postgres:14-alpine
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
+volumes:
+  postgres:

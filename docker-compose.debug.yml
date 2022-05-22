@@ -1,0 +1,5 @@
+version: "3.8"
+
+services:
+  app:
+    entrypoint: sh -c "echo 'Rockelivery API Service awaiting manual start' && tail -f /dev/null"

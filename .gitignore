@@ -16,6 +16,9 @@
 # Vscode config
 /.vscode/
 
+# Dev container config
+/.devcontainer/
+
 # Exlixir LS files
 /.elixir_ls/
 
@@ -28,3 +31,5 @@ erl_crash.dump
 # Ignore package tarball (built via "mix hex.build").
 rockelivery-*.tar
 
+# Env variables
+.env
