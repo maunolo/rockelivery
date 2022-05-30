@@ -5,12 +5,10 @@ services:
     build:
       context: .
     environment:
-      # Variables to connect to our Postgres server.
       PGUSER: postgres
       PGPASSWORD: postgres
       PGDATABASE: rockelivery_dev
       PGPORT: 5432
-      # Hostname of our Postgres container.
       PGHOST: local-postgres
       MIX_ENV: dev
       PORT: 4000
